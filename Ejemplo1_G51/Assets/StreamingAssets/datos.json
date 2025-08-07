@@ -1,0 +1,18 @@
+{
+    "estudiantes": [
+        {
+            "nameP": "ffff",
+            "mailP": "gggg",
+            "dirP": "rrrr",
+            "codeE": "34343",
+            "nameCarrera": "ggggg"
+        },
+        {
+            "nameP": "jujuj",
+            "mailP": "ytyty",
+            "dirP": "iiiooo",
+            "codeE": "201477",
+            "nameCarrera": "jhhh"
+        }
+    ]
+}
