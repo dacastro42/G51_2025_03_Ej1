@@ -2,6 +2,7 @@ using UnityEngine;
 using PackagePersona;
 using System.Collections.Generic;
 using TMPro;
+using System.IO;
 
 public class UsarPersona : MonoBehaviour
 {
@@ -17,19 +18,9 @@ public class UsarPersona : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
-        //Estudiante e1 = new Estudiante("2025_1", "Ing multimedia", 
-        //    "David Castro", "dacastro@uao.edu.co", "carrera 34");
 
-        //Estudiante e2 = new Estudiante("2025_2", "Ing ambiental",
-        //    "Sandra Garces", "dsgarces@uao.edu.co", "carrera 14");
-
-        //listaE.Add(e1);
-        //listaE.Add(e2);
-
-        //for (int i = 0; i < listaE.Count; i++)
-        //{
-        //    Debug.Log(listaE[i].NameP + " " + listaE[i].NameCarrera);
-        //}
+        loadDataEstudiantes();
+        
     }
 
     // Update is called once per frame
@@ -38,7 +29,43 @@ public class UsarPersona : MonoBehaviour
         
     }
 
+    public void loadDataEstudiantes()
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Estudiantes.txt");
+        string fileContent = "";
 
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                fileContent = File.ReadAllText(filePath);
+                Debug.Log("Contenido del archivo: " + fileContent);
+               
+                StringReader reader = new StringReader(fileContent);
+                
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                                      
+                    string[] lineaEstudiante = line.Split(",");
+                    Estudiante e = new Estudiante(lineaEstudiante[3], lineaEstudiante[4],
+                        lineaEstudiante[0], lineaEstudiante[1], lineaEstudiante[2]);
+
+                    Debug.Log("Persona leida "+e.NameP+" "+e.NameCarrera);
+                    listaE.Add(e);
+                    
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Error al leer el archivo: " + e.Message);
+            }
+        }
+        else
+        {
+            Debug.LogError("El archivo no existe en: " + filePath);
+        }
+    }
     public void AddStudentList()
     {
         string nameStudent1= nameStudent.text;
